@@ -34,6 +34,13 @@ import SwiftUI
 
 // MARK: Mutable Song Downloader
 class MutableSongDownloader: NSObject, ObservableObject {
+  // MARK: Song Download Error
+  enum SongDownloadError: Error {
+    case documentDirectoryError
+    case failedToStoreSong
+    case invalidResponse
+  }
+
   // MARK: State
   enum State {
     case paused
@@ -88,7 +95,6 @@ class MutableSongDownloader: NSObject, ObservableObject {
           self.resumeData = data
 
           self.state = .paused
-          self.downloadProgress = self.downloadProgress
         }
       }
     })

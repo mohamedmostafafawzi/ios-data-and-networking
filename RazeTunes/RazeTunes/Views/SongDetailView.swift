@@ -38,14 +38,17 @@ struct SongDetailView: View {
   @Binding var musicItem: MusicItem
 
   @ObservedObject private var downloader = SongDownloader()
-  @ObservedObject private var mutableDownloader = MutableSongDownloader()
+  @ObservedObject private var uploader = RatingUploader()
 
   // swiftlint:disable:next force_unwrapping
   @MainActor @State private var artworkImage = UIImage(named: "URLSessionArtwork")!
   @MainActor @State private var downloadProgress: Float = 0.0
   @MainActor @State private var isDownloading = false
   @MainActor @State private var playMusic = false
+  @MainActor @State private var ratingSubmitted = false
+  @MainActor @State private var ratingView = RatingView()
   @MainActor @State private var showDownloadFailedAlert = false
+  @MainActor @State private var showRatingSubmitFailedAlert = false
 
   // MARK: Body
   var body: some View {
@@ -68,27 +71,40 @@ struct SongDetailView: View {
           Spacer()
 
           VStack(spacing: 16) {
-            Button<Text>(action: mutableDownloadTapped) {
-              switch mutableDownloader.state {
-              case .downloading:
-                return Text("Pause")
-
-              case .failed:
-                return Text("Retry")
-
-              case .finished:
-                return Text("Listen")
-
-              case .paused:
-                return Text("Resume")
-
-              case .waiting:
-                return Text("Download")
+            Button(action: {
+              Task {
+                await downloadTapped()
+              }
+            }, label: {
+              if isDownloading {
+                Text("Downloading...")
+              } else {
+                Text(downloader.downloadLocation == nil ? "Download" : "Listen")
+              }
+            })
+            .alert("Download Failed", isPresented: $showDownloadFailedAlert) {
+              Button("Dismiss", role: .cancel) {
+                showDownloadFailedAlert = false
               }
             }
+            .disabled(isDownloading)
 
-            if mutableDownloader.state == .paused || mutableDownloader.state == .downloading {
-              ProgressView(value: mutableDownloader.downloadProgress)
+            if isDownloading {
+              ProgressView(value: downloadProgress)
+            }
+          }
+
+          Spacer()
+
+          VStack(spacing: 16) {
+            ratingView
+
+            Button {
+              Task {
+                await submitRatingTapped()
+              }
+            } label: {
+              Text("Submit")
             }
           }
 
@@ -102,9 +118,23 @@ struct SongDetailView: View {
         await downloadArtwork()
       }
     })
+    .alert("Failed to submit your rating", isPresented: $showRatingSubmitFailedAlert) {
+      Button(role: .cancel, action: {
+        showRatingSubmitFailedAlert = false
+      }, label: {
+        Text("Dismiss")
+      })
+    }
+    .alert("Rating submitted successfully", isPresented: $ratingSubmitted) {
+      Button(role: .cancel, action: {
+        ratingSubmitted = false
+      }, label: {
+        Text("Dismiss")
+      })
+    }
     .sheet(isPresented: $playMusic) {
       // swiftlint:disable:next force_unwrapping
-      AudioPlayer(songUrl: mutableDownloader.downloadLocation!)
+      AudioPlayer(songUrl: downloader.downloadLocation!)
     }
   }
 
@@ -184,23 +214,13 @@ struct SongDetailView: View {
     }
   }
 
-  private func mutableDownloadTapped() {
-    switch mutableDownloader.state {
-    case .downloading:
-      mutableDownloader.pause()
+  private func submitRatingTapped() async {
+    do {
+      try await uploader.submit(rating: ratingView.rating, for: musicItem)
 
-    case .failed, .waiting:
-      guard let previewURL = musicItem.previewURL else {
-        return
-      }
-
-      mutableDownloader.downloadSong(at: previewURL)
-
-    case .finished:
-      playMusic = true
-
-    case .paused:
-      mutableDownloader.resume()
+      ratingSubmitted = true
+    } catch {
+      showRatingSubmitFailedAlert = true
     }
   }
 }
