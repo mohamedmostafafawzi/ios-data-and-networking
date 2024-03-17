@@ -30,38 +30,39 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import SwiftUI
+import UIKit
 
-// MARK: Content View
-struct ContentView: View {
-  // MARK: Body
-  var body: some View {
-    TabView {
-      SongDetailView(musicItem: .constant(MusicItem.demo()))
-        .tabItem {
-          Image(systemName: "music.note")
-          Text("Tunes")
-        }
+// MARK: App Delegate
+class AppDelegate: NSObject, UIApplicationDelegate {
+  // MARK: Properties
+  var backgroundCompletionHandler: (() -> Void)?
 
-      SupportView()
-        .tabItem {
-          Image(systemName: "exclamationmark.bubble")
-          Text("Support")
-        }
+  // MARK: Application Delegate
+  // swiftlint:disable all
+  func application(_ application: UIApplication,
+                   didFinishLaunchingWithOptions launchOptions: [UIApplication
+                                                                  .LaunchOptionsKey : Any]? = nil) -> Bool {
+    NotificationCenter.default.addObserver(self,
+                                           selector: #selector(backgroundSongDidDownload),
+                                           name: MutableSongDownloader.BackgroundSongDownloadDidFinish,
+                                           object: nil)
 
-      AcronymView()
-        .tabItem {
-          Image(systemName: "doc.text")
-          Text("Acronyms")
-        }
-    }
+    return true
   }
-}
 
-// MARK: - Preview Provider
-struct ContentView_Previews: PreviewProvider {
-  // MARK: Previews
-  static var previews: some View {
-    ContentView()
+  func application(_ application: UIApplication,
+                   handleEventsForBackgroundURLSession identifier: String,
+                   completionHandler: @escaping () -> Void) {
+    // swiftlint:enable all
+    print("URLSession identifier: \(identifier)")
+
+    backgroundCompletionHandler = completionHandler
+  }
+
+  // MARK: Private Functions
+  @objc private func backgroundSongDidDownload() {
+    if let backgroundCompletionHandler = backgroundCompletionHandler {
+      backgroundCompletionHandler()
+    }
   }
 }

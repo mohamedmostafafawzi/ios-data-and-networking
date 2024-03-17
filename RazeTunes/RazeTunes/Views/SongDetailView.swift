@@ -38,6 +38,7 @@ struct SongDetailView: View {
   @Binding var musicItem: MusicItem
 
   @ObservedObject private var downloader = SongDownloader()
+  @ObservedObject private var mutableDownloader = MutableSongDownloader()
   @ObservedObject private var uploader = RatingUploader()
 
   // swiftlint:disable:next force_unwrapping
@@ -118,6 +119,13 @@ struct SongDetailView: View {
         await downloadArtwork()
       }
     })
+    .alert("Failed to download the song", isPresented: $showDownloadFailedAlert) {
+      Button(role: .cancel, action: {
+        showDownloadFailedAlert = false
+      }, label: {
+        Text("Dismiss")
+      })
+    }
     .alert("Failed to submit your rating", isPresented: $showRatingSubmitFailedAlert) {
       Button(role: .cancel, action: {
         showRatingSubmitFailedAlert = false
@@ -153,7 +161,12 @@ struct SongDetailView: View {
 
       artworkImage = image
     } catch {
-      print(error)
+      // swiftlint:disable all
+      /*
+       There's a default image here, so no specific
+       error-handling needed for now.
+       */
+      // swiftlint:enable all
     }
   }
 
@@ -180,8 +193,6 @@ struct SongDetailView: View {
 
         artworkImage = image
       } catch {
-        print(error)
-
         showDownloadFailedAlert = true
       }
     } else {
@@ -205,12 +216,30 @@ struct SongDetailView: View {
         // try await downloader.downloadSong(at: previewURL)
         try await downloader.downloadSongBytes(at: previewURL, progress: $downloadProgress)
       } catch {
-        print(error)
-
         showDownloadFailedAlert = true
       }
     } else {
       playMusic = true
+    }
+  }
+
+  private func mutableDownloadTapped() {
+    switch mutableDownloader.state {
+    case .downloading:
+      mutableDownloader.pause()
+
+    case .failed, .waiting:
+      guard let previewURL = musicItem.previewURL else {
+        return
+      }
+
+      mutableDownloader.downloadSong(at: previewURL)
+
+    case .finished:
+      playMusic = true
+
+    case .paused:
+      mutableDownloader.resume()
     }
   }
 

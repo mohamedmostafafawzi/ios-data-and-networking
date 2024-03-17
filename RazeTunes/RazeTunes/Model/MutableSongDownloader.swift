@@ -50,6 +50,10 @@ class MutableSongDownloader: NSObject, ObservableObject {
     case waiting
   }
 
+  // MARK: Static Properties
+  static let BackgroundSongDownloadDidFinish =
+  NSNotification.Name(rawValue: "BackgroundSongDownloadDidFinish")
+
   // MARK: Properties
   @Published var downloadLocation: URL?
   @Published var downloadProgress: Float = 0
@@ -57,13 +61,22 @@ class MutableSongDownloader: NSObject, ObservableObject {
   private var downloadURL: URL?
   private var downloadTask: URLSessionDownloadTask?
   private var resumeData: Data?
+  // swiftlint:disable:next implicitly_unwrapped_optional
+  private var session: URLSession!
+
   var state: State = .waiting
 
-  private lazy var session: URLSession = {
-    let configuration = URLSessionConfiguration.default
+  // MARK: Initialization
+  override init() {
+    super.init()
 
-    return URLSession(configuration: configuration, delegate: self, delegateQueue: nil)
-  }()
+    let identifier = "com.raywenderlich.razeTunes.mutableSongDownloader"
+    let configuration = URLSessionConfiguration.background(withIdentifier: identifier)
+
+    print("CREATING SESSION WITH IDENTIFIER")
+
+    session = URLSession(configuration: configuration, delegate: self, delegateQueue: nil)
+  }
 
   // MARK: Functions
   func cancel() {
@@ -122,6 +135,8 @@ extension MutableSongDownloader: URLSessionDownloadDelegate {
     Task {
       await MainActor.run {
         downloadProgress = Float(totalBytesWritten) / Float(totalBytesExpectedToWrite)
+
+        print("Progress: \(downloadProgress)")
       }
     }
   }
@@ -134,8 +149,7 @@ extension MutableSongDownloader: URLSessionDownloadDelegate {
 
     guard let documentsPath = fileManager.urls(
       for: .documentDirectory,
-      in: .userDomainMask).first,
-      let lastPathComponent = downloadURL?.lastPathComponent
+      in: .userDomainMask).first
     else {
       Task {
         await MainActor.run {
@@ -146,6 +160,7 @@ extension MutableSongDownloader: URLSessionDownloadDelegate {
       return
     }
 
+    let lastPathComponent = downloadURL?.lastPathComponent ?? "Song.m4a"
     let destinationURL = documentsPath.appendingPathComponent(lastPathComponent)
 
     do {
@@ -175,7 +190,7 @@ extension MutableSongDownloader: URLSessionDownloadDelegate {
   func urlSession(_ session: URLSession,
                   task: URLSessionTask,
                   didCompleteWithError error: Error?) {
-    // swiftlint:enable all
+    // swiftline:enable all
     Task {
       await MainActor.run {
         if let httpResponse = task.response as? HTTPURLResponse,
@@ -183,6 +198,14 @@ extension MutableSongDownloader: URLSessionDownloadDelegate {
           state = .failed
         }
       }
+    }
+  }
+
+  func urlSessionDidFinishEvents(forBackgroundURLSession session: URLSession) {
+    Task { @MainActor in
+      print("urlSessionDidFinishEvents called.")
+
+      NotificationCenter.default.post(name: Self.BackgroundSongDownloadDidFinish, object: nil)
     }
   }
 }
