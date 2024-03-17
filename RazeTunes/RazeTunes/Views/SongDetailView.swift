@@ -38,7 +38,6 @@ struct SongDetailView: View {
   @Binding var musicItem: MusicItem
 
   @ObservedObject private var downloader = SongDownloader()
-  @ObservedObject private var mutableDownloader = MutableSongDownloader()
   @ObservedObject private var uploader = RatingUploader()
 
   // swiftlint:disable:next force_unwrapping
@@ -72,27 +71,26 @@ struct SongDetailView: View {
           Spacer()
 
           VStack(spacing: 16) {
-            Button<Text>(action: mutableDownloadTapped) {
-              switch mutableDownloader.state {
-              case .downloading:
-                return Text("Pause")
-
-              case .failed:
-                return Text("Retry")
-
-              case .finished:
-                return Text("Listen")
-
-              case .paused:
-                return Text("Resume")
-
-              case .waiting:
-                return Text("Download")
+            Button(action: {
+              Task {
+                await downloadTapped()
+              }
+            }, label: {
+              if isDownloading {
+                Text("Downloading...")
+              } else {
+                Text(downloader.downloadLocation == nil ? "Download" : "Listen")
+              }
+            })
+            .alert("Download Failed", isPresented: $showDownloadFailedAlert) {
+              Button("Dismiss", role: .cancel) {
+                showDownloadFailedAlert = false
               }
             }
+            .disabled(isDownloading)
 
-            if mutableDownloader.state == .paused || mutableDownloader.state == .downloading {
-              ProgressView(value: mutableDownloader.downloadProgress)
+            if isDownloading {
+              ProgressView(value: downloadProgress)
             }
           }
 
@@ -136,7 +134,7 @@ struct SongDetailView: View {
     }
     .sheet(isPresented: $playMusic) {
       // swiftlint:disable:next force_unwrapping
-      AudioPlayer(songUrl: mutableDownloader.downloadLocation!)
+      AudioPlayer(songUrl: downloader.downloadLocation!)
     }
   }
 
@@ -213,26 +211,6 @@ struct SongDetailView: View {
       }
     } else {
       playMusic = true
-    }
-  }
-
-  private func mutableDownloadTapped() {
-    switch mutableDownloader.state {
-    case .downloading:
-      mutableDownloader.pause()
-
-    case .failed, .waiting:
-      guard let previewURL = musicItem.previewURL else {
-        return
-      }
-
-      mutableDownloader.downloadSong(at: previewURL)
-
-    case .finished:
-      playMusic = true
-
-    case .paused:
-      mutableDownloader.resume()
     }
   }
 
