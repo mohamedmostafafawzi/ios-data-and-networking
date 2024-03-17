@@ -32,48 +32,81 @@
 
 import SwiftUI
 
-// MARK: Content View
-struct ContentView: View {
+// MARK: Cookie View
+struct CookieView: View {
+  // MARK: Properties
+  @State private var cookieName: String?
+  @State private var cookieValue: String?
+
   // MARK: Body
   var body: some View {
-    TabView {
-      SongDetailView(musicItem: .constant(MusicItem.demo()))
-        .tabItem {
-          Image(systemName: "music.note")
-          Text("Tunes")
-        }
+    VStack {
+      Image(systemName: "mouth")
+        .resizable()
+        .frame(maxWidth: 120, maxHeight: 70)
+        .padding(.bottom, 20)
 
-      SupportView()
-        .tabItem {
-          Image(systemName: "exclamationmark.bubble")
-          Text("Support")
-        }
+      Text("Cookie name: \(cookieName ?? "-")")
+        .padding(.top, 20)
+      Text("Cookie value: \(cookieValue ?? "-")")
+        .padding(.bottom, 20)
 
-      AcronymView()
-        .tabItem {
-          Image(systemName: "doc.text")
-          Text("Acronyms")
+      Button("Get Cookies") {
+        Task {
+          await getCookiesTapped()
         }
+      }
+    }
+  }
 
-      AboutView()
-        .tabItem {
-          Image(systemName: "questionmark.circle")
-          Text("About")
-        }
+  // MARK: Functions
+  private func getCookiesTapped() async {
+    func setCookies(name: String? = nil, value: String? = nil) {
+      Task { @MainActor in
+        cookieName = name ?? "N/A"
+        cookieValue = value ?? "N/A"
+      }
+    }
 
-      CookieView()
-        .tabItem {
-          Image(systemName: "mouth")
-          Text("Cookies")
-        }
+    guard let url = URL(string: "https://apple.com") else {
+      setCookies()
+
+      return
+    }
+
+    do {
+      let (_, response) = try await URLSession.shared.data(from: url)
+
+      guard let httpResponse = response as? HTTPURLResponse,
+        let fields = httpResponse.allHeaderFields as? [String: String],
+        let cookie = HTTPCookie.cookies(withResponseHeaderFields: fields, for: url).first
+      else {
+        setCookies()
+
+        return
+      }
+
+      setCookies(name: cookie.name, value: cookie.value)
+
+      var cookieProperties: [HTTPCookiePropertyKey: Any] = [:]
+      cookieProperties[.name] = cookie.name
+      cookieProperties[.value] = cookie.value
+      cookieProperties[.domain] = cookie.domain
+
+      if let myCookie = HTTPCookie(properties: cookieProperties) {
+        HTTPCookieStorage.shared.setCookie(myCookie)
+        HTTPCookieStorage.shared.deleteCookie(cookie)
+      }
+    } catch {
+      setCookies()
     }
   }
 }
 
 // MARK: - Preview Provider
-struct ContentView_Previews: PreviewProvider {
+struct CookieView_Previews: PreviewProvider {
   // MARK: Previews
   static var previews: some View {
-    ContentView()
+    CookieView()
   }
 }
