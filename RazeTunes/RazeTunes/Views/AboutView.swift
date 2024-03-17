@@ -32,42 +32,32 @@
 
 import SwiftUI
 
-// MARK: Content View
-struct ContentView: View {
-  // MARK: Body
+// MARK: About View
+struct AboutView: View {
   var body: some View {
-    TabView {
-      SongDetailView(musicItem: .constant(MusicItem.demo()))
-        .tabItem {
-          Image(systemName: "music.note")
-          Text("Tunes")
-        }
-
-      SupportView()
-        .tabItem {
-          Image(systemName: "exclamationmark.bubble")
-          Text("Support")
-        }
-
-      AcronymView()
-        .tabItem {
-          Image(systemName: "doc.text")
-          Text("Acronyms")
-        }
-
-      AboutView()
-        .tabItem {
-          Image(systemName: "questionmark.circle")
-          Text("About")
-        }
+    NavigationView {
+      VStack(spacing: 40) {
+        WebSiteButtonView(
+          color: .red,
+          title: "objc.io",
+          url: "https://www.objc.io")
+        WebSiteButtonView(
+          color: .green,
+          title: "mokacoding",
+          url: "http://www.mokacoding.com")
+        WebSiteButtonView(
+          color: .blue,
+          title: "PBS",
+          url: "http://www.pbs.org/video/2365356586/")
+      }
     }
   }
 }
 
 // MARK: - Preview Provider
-struct ContentView_Previews: PreviewProvider {
+struct AboutView_Previews: PreviewProvider {
   // MARK: Previews
   static var previews: some View {
-    ContentView()
+    AboutView()
   }
 }

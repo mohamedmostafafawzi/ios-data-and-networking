@@ -50,6 +50,7 @@ class AcronymSender {
   private let baseURL: URL
   private let loginEndpoint: URL
   private let newEndpoint: URL
+  private let newUserEndpoint: URL
 
   // MARK: Initialization
   init() {
@@ -61,6 +62,7 @@ class AcronymSender {
     self.baseURL = URL(string: "https://tilftw.herokuapp.com/")!
     self.loginEndpoint = URL(string: "login", relativeTo: baseURL)!
     self.newEndpoint = URL(string: "new", relativeTo: baseURL)!
+    self.newUserEndpoint = URL(string: "users", relativeTo: baseURL)!
     // swiftlint:enable force_unwrapping
   }
 

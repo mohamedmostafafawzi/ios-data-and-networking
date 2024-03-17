@@ -31,43 +31,23 @@
 /// THE SOFTWARE.
 
 import SwiftUI
+import WebKit
 
-// MARK: Content View
-struct ContentView: View {
-  // MARK: Body
-  var body: some View {
-    TabView {
-      SongDetailView(musicItem: .constant(MusicItem.demo()))
-        .tabItem {
-          Image(systemName: "music.note")
-          Text("Tunes")
-        }
+// MARK: Web View
+struct WebView: UIViewRepresentable {
+  // MARK: Properties
+  let url: URL
 
-      SupportView()
-        .tabItem {
-          Image(systemName: "exclamationmark.bubble")
-          Text("Support")
-        }
+  // MARK: Functions
+  func makeUIView(context: Context) -> WKWebView {
+    let request = URLRequest(url: url)
 
-      AcronymView()
-        .tabItem {
-          Image(systemName: "doc.text")
-          Text("Acronyms")
-        }
+    let webView = WKWebView()
+    webView.load(request)
 
-      AboutView()
-        .tabItem {
-          Image(systemName: "questionmark.circle")
-          Text("About")
-        }
-    }
+    return webView
   }
-}
 
-// MARK: - Preview Provider
-struct ContentView_Previews: PreviewProvider {
-  // MARK: Previews
-  static var previews: some View {
-    ContentView()
+  func updateUIView(_ uiView: WKWebView, context: Context) {
   }
 }
