@@ -15,6 +15,7 @@
 		55040F0D27C07B06006F6D1B /* MutableSongDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55040F0C27C07B06006F6D1B /* MutableSongDownloader.swift */; };
 		55040F0F27C07C7E006F6D1B /* RatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55040F0E27C07C7E006F6D1B /* RatingView.swift */; };
 		55040F1127C07D5E006F6D1B /* RatingUploader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55040F1027C07D5E006F6D1B /* RatingUploader.swift */; };
+		555E738927C07F4600AA42F2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555E738827C07F4600AA42F2 /* AppDelegate.swift */; };
 		55A792FB27BF46BD004B8731 /* SongDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A792FA27BF46BD004B8731 /* SongDownloader.swift */; };
 		55F69FCB27BF44110080353B /* MediaResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55F69FCA27BF44110080353B /* MediaResponse.swift */; };
 		55F69FCD27BF44280080353B /* AudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55F69FCC27BF44280080353B /* AudioPlayer.swift */; };
@@ -32,6 +33,7 @@
 		55040F0C27C07B06006F6D1B /* MutableSongDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MutableSongDownloader.swift; sourceTree = "<group>"; };
 		55040F0E27C07C7E006F6D1B /* RatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingView.swift; sourceTree = "<group>"; };
 		55040F1027C07D5E006F6D1B /* RatingUploader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingUploader.swift; sourceTree = "<group>"; };
+		555E738827C07F4600AA42F2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		55A792FA27BF46BD004B8731 /* SongDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongDownloader.swift; sourceTree = "<group>"; };
 		55F69FCA27BF44110080353B /* MediaResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaResponse.swift; sourceTree = "<group>"; };
 		55F69FCC27BF44280080353B /* AudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayer.swift; sourceTree = "<group>"; };
@@ -71,6 +73,7 @@
 			isa = PBXGroup;
 			children = (
 				18D775CE22AD944400AE281E /* Info.plist */,
+				555E738827C07F4600AA42F2 /* AppDelegate.swift */,
 				1839F4AF25190F2A00BB00F1 /* AppMain.swift */,
 				18D775C422AD944300AE281E /* ContentView.swift */,
 				18D775C622AD944400AE281E /* Assets.xcassets */,
@@ -212,6 +215,7 @@
 				1839F4B025190F2A00BB00F1 /* AppMain.swift in Sources */,
 				55A792FB27BF46BD004B8731 /* SongDownloader.swift in Sources */,
 				55F69FCB27BF44110080353B /* MediaResponse.swift in Sources */,
+				555E738927C07F4600AA42F2 /* AppDelegate.swift in Sources */,
 				55F69FCD27BF44280080353B /* AudioPlayer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
