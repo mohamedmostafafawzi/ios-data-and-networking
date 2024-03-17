@@ -12,8 +12,8 @@
 - [x] Download Data
 
 ## Advanced Networking with URLSession
-- [ ] Upload Data, Background Downloads & WebSockets
-- [ ] Authentication, Cookies & App Transport Security
+- [x] Upload Data, Background Downloads & WebSockets
+- [x] Authentication, Cookies & App Transport Security
 
 ## Core Data: Fundamentals
 - [ ] The Core Data Stack
