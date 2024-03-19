@@ -15,6 +15,8 @@
 		AE1D5CE827C2A1120033125A /* LaunchDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE1D5CE727C2A1120033125A /* LaunchDetailView.swift */; };
 		AE4A726027FA0536006EACBD /* RocketLaunches.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = AE4A725E27FA0536006EACBD /* RocketLaunches.xcdatamodeld */; };
 		AE4A726227FA055B006EACBD /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE4A726127FA055B006EACBD /* Persistence.swift */; };
+		AE4A726427FA0BFF006EACBD /* RocketLaunch+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE4A726327FA0BFF006EACBD /* RocketLaunch+CoreDataClass.swift */; };
+		AE4A726627FA0C87006EACBD /* RocketLaunch+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE4A726527FA0C87006EACBD /* RocketLaunch+CoreDataProperties.swift */; };
 		AE5BF31627C47A17009B0282 /* RocketLaunchesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE5BF31527C47A17009B0282 /* RocketLaunchesTests.swift */; };
 		AEF7FB8227C1856F000CBF46 /* LaunchesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEF7FB8127C1856F000CBF46 /* LaunchesView.swift */; };
 		AEF7FB8627C18583000CBF46 /* LaunchCreateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEF7FB8527C18583000CBF46 /* LaunchCreateView.swift */; };
@@ -42,6 +44,8 @@
 		AE1D5CE727C2A1120033125A /* LaunchDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchDetailView.swift; sourceTree = "<group>"; };
 		AE4A725F27FA0536006EACBD /* RocketLaunches.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = RocketLaunches.xcdatamodel; sourceTree = "<group>"; };
 		AE4A726127FA055B006EACBD /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
+		AE4A726327FA0BFF006EACBD /* RocketLaunch+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RocketLaunch+CoreDataClass.swift"; sourceTree = "<group>"; };
+		AE4A726527FA0C87006EACBD /* RocketLaunch+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RocketLaunch+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		AE5BF31327C47A17009B0282 /* RocketLaunchesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RocketLaunchesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		AE5BF31527C47A17009B0282 /* RocketLaunchesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RocketLaunchesTests.swift; sourceTree = "<group>"; };
 		AEF7FB8127C1856F000CBF46 /* LaunchesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchesView.swift; sourceTree = "<group>"; };
@@ -131,6 +135,8 @@
 			isa = PBXGroup;
 			children = (
 				AE4A726127FA055B006EACBD /* Persistence.swift */,
+				AE4A726327FA0BFF006EACBD /* RocketLaunch+CoreDataClass.swift */,
+				AE4A726527FA0C87006EACBD /* RocketLaunch+CoreDataProperties.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -269,7 +275,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AE4A726627FA0C87006EACBD /* RocketLaunch+CoreDataProperties.swift in Sources */,
 				18D775C522AD944300AE281E /* ContentView.swift in Sources */,
+				AE4A726427FA0BFF006EACBD /* RocketLaunch+CoreDataClass.swift in Sources */,
 				AE4A726227FA055B006EACBD /* Persistence.swift in Sources */,
 				AE4A726027FA0536006EACBD /* RocketLaunches.xcdatamodeld in Sources */,
 				AEF7FB8227C1856F000CBF46 /* LaunchesView.swift in Sources */,
