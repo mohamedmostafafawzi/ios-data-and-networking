@@ -34,10 +34,16 @@ import SwiftUI
 
 struct LaunchesView: View {
   @State var isShowingCreateModal = false
+  @State var activeSortIndex = 0
   let launchesFetchRequest = RocketLaunch.unViewedLaunchesFetchRequest()
   var launches: FetchedResults<RocketLaunch> {
     launchesFetchRequest.wrappedValue
   }
+
+  let sortTypes = [
+    (name: "Name", descriptors: [SortDescriptor(\RocketLaunch.name, order: .forward)]),
+    (name: "LaunchDate", descriptors: [SortDescriptor(\RocketLaunch.launchDate, order: .forward)])
+  ]
 
   var body: some View {
     VStack {
@@ -62,6 +68,25 @@ struct LaunchesView: View {
       .padding(.leading)
     }
     .navigationBarTitle(Text("Launches"))
+    .onChange(of: activeSortIndex) { _ in
+      launches.sortDescriptors = sortTypes[activeSortIndex].descriptors
+    }
+    .toolbar {
+      Menu(content: {
+        Picker(
+          selection: $activeSortIndex,
+          content: {
+            ForEach(0..<sortTypes.count, id: \.self) { index in
+              let sortType = sortTypes[index]
+              Text(sortType.name)
+            }
+          },
+          label: {}
+        )
+      }, label: {
+        Image(systemName: "line.3.horizontal.decrease.circle.fill")
+      })
+    }
   }
 }
 
