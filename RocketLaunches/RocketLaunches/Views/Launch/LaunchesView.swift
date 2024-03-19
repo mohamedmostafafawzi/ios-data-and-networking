@@ -34,7 +34,7 @@ import SwiftUI
 
 struct LaunchesView: View {
   @State var isShowingCreateModal = false
-  let launchesFetchRequest = RocketLaunch.basicFetchRequest()
+  var launchesFetchRequest = RocketLaunch.fetchRequestSortedByNameAndLaunchDate()
   var launches: FetchedResults<RocketLaunch> {
     launchesFetchRequest.wrappedValue
   }
@@ -44,10 +44,12 @@ struct LaunchesView: View {
       List {
         Section {
           ForEach(launches, id: \.self) { launch in
-            HStack {
-              LaunchStatusView(isViewed: launch.isViewed)
-              Text("\(launch.name ?? "")")
-              Spacer()
+            NavigationLink(destination: LaunchDetailView(launch: launch)) {
+              HStack {
+                LaunchStatusView(isViewed: launch.isViewed)
+                Text("\(launch.name ?? "")")
+                Spacer()
+              }
             }
           }
         }
@@ -85,8 +87,8 @@ struct NewLaunchButton: View {
           .font(.headline)
           .foregroundColor(.red)
       })
-      .sheet(isPresented: $isShowingCreateModal) {
-        LaunchCreateView()
-      }
+    .sheet(isPresented: $isShowingCreateModal) {
+      LaunchCreateView()
+    }
   }
 }

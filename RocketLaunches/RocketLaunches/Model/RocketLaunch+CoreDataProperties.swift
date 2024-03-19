@@ -61,6 +61,17 @@ extension RocketLaunch {
     return FetchRequest<RocketLaunch>(entity: RocketLaunch.entity(), sortDescriptors: [])
   }
 
+  static func sortedFetchRequest() -> FetchRequest<RocketLaunch> {
+    let launchDateSortDescriptor = NSSortDescriptor(key: "launchDate", ascending: true)
+    return FetchRequest(entity: RocketLaunch.entity(), sortDescriptors: [launchDateSortDescriptor])
+  }
+
+  static func fetchRequestSortedByNameAndLaunchDate() -> FetchRequest<RocketLaunch> {
+    let nameSortDescriptor = NSSortDescriptor(key: "name", ascending: true)
+    let launchDateSortDescriptor = NSSortDescriptor(key: "launchDate", ascending: true)
+    return FetchRequest(entity: RocketLaunch.entity(), sortDescriptors: [nameSortDescriptor, launchDateSortDescriptor])
+  }
+
   @NSManaged public var name: String?
   @NSManaged public var isViewed: Bool
   @NSManaged public var launchDate: Date?
