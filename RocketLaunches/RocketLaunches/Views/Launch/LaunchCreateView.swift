@@ -39,7 +39,7 @@ struct LaunchCreateView: View {
   // MARK: - State -
   @State var name: String = ""
   @State var notes: String = ""
-  @State var isViewed = false
+  @State var isVieweed = false
   @State var launchDate = Date()
   @State var launchpad: String = ""
 
