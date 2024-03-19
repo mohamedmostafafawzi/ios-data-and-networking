@@ -16,7 +16,7 @@
 - [x] Authentication, Cookies & App Transport Security
 
 ## Core Data: Fundamentals
-- [ ] The Core Data Stack
+- [x] The Core Data Stack
 - [ ] Saving Launches
 
 ## Core Data: Beyond the Basics
