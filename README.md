@@ -17,7 +17,7 @@
 
 ## Core Data: Fundamentals
 - [x] The Core Data Stack
-- [ ] Saving Launches
+- [x] Saving Launches
 
 ## Core Data: Beyond the Basics
 - [ ] Fetching & Displaying Launches
