@@ -66,6 +66,13 @@ extension Tag {
 
   @NSManaged public var title: String?
   @NSManaged public var launches: Set<RocketLaunch>
+
+  @objc var launchCount: Int {
+    willAccessValue(forKey: "launches")
+    let count = launches.count
+    didAccessValue(forKey: "launches")
+    return count
+  }
 }
 
 // MARK: Generated accessors for launches
