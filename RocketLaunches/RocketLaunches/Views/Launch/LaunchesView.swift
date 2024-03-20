@@ -39,6 +39,7 @@ struct LaunchesView: View {
   var launches: FetchedResults<RocketLaunch> {
     launchesFetchRequest.wrappedValue
   }
+  let launchList: RocketLaunchList
 
   let sortTypes = [
     (name: "Name", descriptors: [SortDescriptor(\RocketLaunch.name, order: .forward)]),
@@ -49,7 +50,7 @@ struct LaunchesView: View {
     VStack {
       List {
         Section {
-          ForEach(launches, id: \.self) { launch in
+          ForEach(launchList.launches, id: \.self) { launch in
             NavigationLink(destination: LaunchDetailView(launch: launch)) {
               HStack {
                 LaunchStatusView(isViewed: launch.isViewed)
@@ -62,7 +63,7 @@ struct LaunchesView: View {
       }
       .background(Color.white)
       HStack {
-        NewLaunchButton(isShowingCreateModal: $isShowingCreateModal)
+        NewLaunchButton(isShowingCreateModal: $isShowingCreateModal, launchList: self.launchList)
         Spacer()
       }
       .padding(.leading)
@@ -93,14 +94,15 @@ struct LaunchesView: View {
 struct LaunchesView_Previews: PreviewProvider {
   static var previews: some View {
     let context = PersistenceController.preview.container.viewContext
-    let newLaunch = RocketLaunch(context: context)
-    newLaunch.name = "A really cool launch!"
-    return LaunchesView()
+    let newLaunchList = RocketLaunchList(context: context)
+    newLaunchList.title = "Preview List"
+    return LaunchesView(launchList: newLaunchList).environment(\.managedObjectContext, context)
   }
 }
 
 struct NewLaunchButton: View {
   @Binding var isShowingCreateModal: Bool
+  let launchList: RocketLaunchList
 
   var body: some View {
     Button(
@@ -113,7 +115,7 @@ struct NewLaunchButton: View {
           .foregroundColor(.red)
       })
     .sheet(isPresented: $isShowingCreateModal) {
-      LaunchCreateView()
+      LaunchCreateView(launchList: launchList)
     }
   }
 }
