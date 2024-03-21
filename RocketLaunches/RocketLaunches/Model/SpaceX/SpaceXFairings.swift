@@ -32,7 +32,7 @@
 
 import Foundation
 
-struct SpaceXFairingsJSON: Codable {
+struct SpaceXFairingsJSON: BatchInsertable {
   var reused: Bool?
   var recoveryAttempt: Bool?
   var recovered: Bool?
@@ -44,5 +44,15 @@ struct SpaceXFairingsJSON: Codable {
     case recoveryAttempt = "recovery_attempt"
     case recovered
     case ships
+  }
+
+  var dictionaryValue: [String: Any] {
+    [
+      "reused": reused as Any,
+      "recoveryAttempt": recoveryAttempt as Any,
+      "recovered": recovered as Any,
+      "ships": ships,
+      "id": id
+    ]
   }
 }

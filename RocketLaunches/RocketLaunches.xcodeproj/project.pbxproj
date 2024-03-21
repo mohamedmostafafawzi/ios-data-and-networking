@@ -29,6 +29,8 @@
 		AEDE8A68280252E2003303E0 /* SpaceXFairings.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEDE8A67280252E2003303E0 /* SpaceXFairings.swift */; };
 		AEDE8A6A280252F9003303E0 /* SpaceXLaunchJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEDE8A69280252F9003303E0 /* SpaceXLaunchJSON.swift */; };
 		AEDE8A6C28025305003303E0 /* SpaceXLinks.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEDE8A6B28025305003303E0 /* SpaceXLinks.swift */; };
+		AEDE8A6E280352AD003303E0 /* SpaceXLaunchDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEDE8A6D280352AD003303E0 /* SpaceXLaunchDetailView.swift */; };
+		AEDE8A70280352BB003303E0 /* SpaceXLaunchesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEDE8A6F280352BB003303E0 /* SpaceXLaunchesView.swift */; };
 		AEF7FB8227C1856F000CBF46 /* LaunchesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEF7FB8127C1856F000CBF46 /* LaunchesView.swift */; };
 		AEF7FB8627C18583000CBF46 /* LaunchCreateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEF7FB8527C18583000CBF46 /* LaunchCreateView.swift */; };
 		AEF7FB8A27C18598000CBF46 /* LaunchStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEF7FB8927C18598000CBF46 /* LaunchStatusView.swift */; };
@@ -70,6 +72,8 @@
 		AEDE8A67280252E2003303E0 /* SpaceXFairings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpaceXFairings.swift; sourceTree = "<group>"; };
 		AEDE8A69280252F9003303E0 /* SpaceXLaunchJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpaceXLaunchJSON.swift; sourceTree = "<group>"; };
 		AEDE8A6B28025305003303E0 /* SpaceXLinks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpaceXLinks.swift; sourceTree = "<group>"; };
+		AEDE8A6D280352AD003303E0 /* SpaceXLaunchDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpaceXLaunchDetailView.swift; sourceTree = "<group>"; };
+		AEDE8A6F280352BB003303E0 /* SpaceXLaunchesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpaceXLaunchesView.swift; sourceTree = "<group>"; };
 		AEF7FB8127C1856F000CBF46 /* LaunchesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchesView.swift; sourceTree = "<group>"; };
 		AEF7FB8527C18583000CBF46 /* LaunchCreateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchCreateView.swift; sourceTree = "<group>"; };
 		AEF7FB8927C18598000CBF46 /* LaunchStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchStatusView.swift; sourceTree = "<group>"; };
@@ -213,6 +217,8 @@
 				AEF7FB8527C18583000CBF46 /* LaunchCreateView.swift */,
 				AE1D5CE727C2A1120033125A /* LaunchDetailView.swift */,
 				AEF7FB8927C18598000CBF46 /* LaunchStatusView.swift */,
+				AEDE8A6D280352AD003303E0 /* SpaceXLaunchDetailView.swift */,
+				AEDE8A6F280352BB003303E0 /* SpaceXLaunchesView.swift */,
 			);
 			path = Launch;
 			sourceTree = "<group>";
@@ -342,10 +348,12 @@
 			files = (
 				AE4A726627FA0C87006EACBD /* RocketLaunch+CoreDataProperties.swift in Sources */,
 				AE4A726D27FA3A0D006EACBD /* ListView.swift in Sources */,
+				AEDE8A70280352BB003303E0 /* SpaceXLaunchesView.swift in Sources */,
 				18D775C522AD944300AE281E /* ContentView.swift in Sources */,
 				AE4A726A27FA3766006EACBD /* RocketLaunchList+CoreDataProperties.swift in Sources */,
 				AEDE8A66280252C2003303E0 /* SpaceXAPI.swift in Sources */,
 				AE4A726427FA0BFF006EACBD /* RocketLaunch+CoreDataClass.swift in Sources */,
+				AEDE8A6E280352AD003303E0 /* SpaceXLaunchDetailView.swift in Sources */,
 				AE4A726227FA055B006EACBD /* Persistence.swift in Sources */,
 				AE4A727627FA4A2A006EACBD /* TagsView.swift in Sources */,
 				AE4A726027FA0536006EACBD /* RocketLaunches.xcdatamodeld in Sources */,
