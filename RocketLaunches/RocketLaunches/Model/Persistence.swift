@@ -181,6 +181,12 @@ struct PersistenceController {
     return results as [RocketLaunchList]
   }
 
+  static func deleteList(list: RocketLaunchList) throws {
+    let taskContext = shared.container.viewContext
+    taskContext.delete(list)
+    try taskContext.save()
+  }
+
   static func getTestLaunch() -> SpaceXLaunch? {
     let fetchRequest = SpaceXLaunch.fetchRequest()
     fetchRequest.fetchLimit = 1

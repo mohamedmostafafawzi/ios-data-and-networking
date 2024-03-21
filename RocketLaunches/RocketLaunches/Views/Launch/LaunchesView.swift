@@ -36,10 +36,12 @@ struct LaunchesView: View {
   @State var isShowingCreateModal = false
   @State var isShowingTagsModal = false
   @State var activeSortIndex = 0
-  var launchesFetchRequest: FetchRequest<RocketLaunch>
-  var launches: FetchedResults<RocketLaunch> {
-    launchesFetchRequest.wrappedValue
-  }
+  let launchListTitle: String
+  @FetchRequest(
+    sortDescriptors: [],
+    animation: .default)
+  var launches: FetchedResults<RocketLaunch>
+
   let launchList: RocketLaunchList
   var tags: [Tag] {
     let tagsSet = launchList.launches.compactMap { $0.tags }.reduce(Set<Tag>(), { result, tags in
@@ -57,7 +59,7 @@ struct LaunchesView: View {
 
   init(launchList: RocketLaunchList) {
     self.launchList = launchList
-    self.launchesFetchRequest = RocketLaunch.launches(in: launchList)
+    self.launchListTitle = launchList.title ?? "No Title Found"
   }
 
   var body: some View {
