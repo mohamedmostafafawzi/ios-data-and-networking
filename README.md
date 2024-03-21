@@ -21,7 +21,7 @@
 
 ## Core Data: Beyond the Basics
 - [x] Fetching & Displaying Launches
-- [ ] Advanced Core Data
+- [x] Advanced Core Data
 
 ### Resources
 - [iOS Data & Networking](https://www.kodeco.com/ios/paths/iosdatanetworking)
