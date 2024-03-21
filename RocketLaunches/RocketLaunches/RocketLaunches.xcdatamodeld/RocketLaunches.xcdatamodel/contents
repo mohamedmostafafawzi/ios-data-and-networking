@@ -1,20 +1,25 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="20083" systemVersion="21C52" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="20086" systemVersion="21E258" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="RocketLaunch" representedClassName="RocketLaunch" syncable="YES">
         <attribute name="isViewed" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
-        <attribute name="launchDate" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="launchpad" optional="YES" attributeType="String"/>
-        <attribute name="name" optional="YES" attributeType="String"/>
-        <attribute name="notes" optional="YES" attributeType="String"/>
-        <relationship name="list" maxCount="1" deletionRule="Nullify" destinationEntity="RocketLaunchList" inverseName="launches" inverseEntity="RocketLaunchList"/>
+        <attribute name="launchDate" attributeType="Date" defaultDateTimeInterval="671851140" usesScalarValueType="NO"/>
+        <attribute name="launchpad" optional="YES" attributeType="String" defaultValueString=""/>
+        <attribute name="name" attributeType="String"/>
+        <attribute name="notes" optional="YES" attributeType="String" defaultValueString=""/>
+        <relationship name="list" toMany="YES" deletionRule="Nullify" destinationEntity="RocketLaunchList" inverseName="launches" inverseEntity="RocketLaunchList"/>
         <relationship name="tags" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tag" inverseName="launches" inverseEntity="Tag"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="name"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
     </entity>
     <entity name="RocketLaunchList" representedClassName="RocketLaunchList" syncable="YES">
         <attribute name="title" attributeType="String"/>
         <relationship name="launches" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="RocketLaunch" inverseName="list" inverseEntity="RocketLaunch"/>
     </entity>
     <entity name="SpaceXFailure" representedClassName="SpaceXFailure" syncable="YES" codeGenerationType="class">
-        <attribute name="altitide" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="altitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="reason" optional="YES" attributeType="String"/>
         <attribute name="time" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <relationship name="launch" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SpaceXLaunch" inverseName="failures" inverseEntity="SpaceXLaunch"/>
@@ -81,7 +86,7 @@
     </entity>
     <entity name="SpaceXLaunchList" representedClassName="SpaceXLaunchList" syncable="YES" codeGenerationType="class">
         <attribute name="title" optional="YES" attributeType="String"/>
-        <relationship name="launches" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SpaceXLaunch" inverseName="spaceXList" inverseEntity="SpaceXLaunch"/>
+        <relationship name="launches" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SpaceXLaunch" inverseName="spaceXList" inverseEntity="SpaceXLaunch"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
                 <constraint value="title"/>

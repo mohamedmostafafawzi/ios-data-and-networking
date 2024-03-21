@@ -39,6 +39,7 @@ struct LaunchDetailView: View {
   let launchNotes: String?
   let launchDate: Date?
   let isViewed: Bool?
+  let allLists: [RocketLaunchList]
 
   init(launch: RocketLaunch) {
     self.launch = launch
@@ -46,6 +47,7 @@ struct LaunchDetailView: View {
     self.launchNotes = launch.notes
     self.launchDate = launch.launchDate
     self.isViewed = launch.isViewed
+    self.allLists = PersistenceController.getAllLists()
   }
 
   var body: some View {

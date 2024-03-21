@@ -51,7 +51,7 @@ extension RocketLaunch {
     launch.isViewed = isViewed
     launch.launchpad = launchpad
     launch.tags = tags
-    launch.list = list
+    launch.addToList(list)
 
     do {
       try managedObjectContext.save()
@@ -89,7 +89,7 @@ extension RocketLaunch {
   static func launches(in list: RocketLaunchList) -> FetchRequest<RocketLaunch> {
     let nameSortDescriptor = NSSortDescriptor(key: "name", ascending: true)
     let launchDateSortDescriptor = NSSortDescriptor(key: "launchDate", ascending: false)
-    let listPredicate = NSPredicate(format: "%K == %@", "list.title", list.title!)
+    let listPredicate = NSPredicate(format: "ANY %K == %@", "list.title", list.title!)
     let isViewedPredicate = NSPredicate(format: "%K == %@", "isViewed", NSNumber(value: false))
     let combinedPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: [listPredicate, isViewedPredicate])
     return FetchRequest(
@@ -103,6 +103,24 @@ extension RocketLaunch {
   @NSManaged public var launchDate: Date?
   @NSManaged public var launchpad: String?
   @NSManaged public var notes: String?
-  @NSManaged public var list: RocketLaunchList
+  @NSManaged public var list: Set<RocketLaunchList>
   @NSManaged var tags: Set<Tag>?
+}
+
+// MARK: Generated accessors for list
+extension RocketLaunch {
+  @objc(addListObject:)
+  @NSManaged public func addToList(_ value: RocketLaunchList)
+
+  @objc(removeListObject:)
+  @NSManaged public func removeFromList(_ value: RocketLaunchList)
+
+  @objc(addList:)
+  @NSManaged public func addToList(_ values: NSSet)
+
+  @objc(removeList:)
+  @NSManaged public func removeFromList(_ values: NSSet)
+}
+
+extension RocketLaunch: Identifiable {
 }
