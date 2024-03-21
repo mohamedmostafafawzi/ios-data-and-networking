@@ -39,6 +39,7 @@ struct LaunchDetailView: View {
   let launchNotes: String?
   let launchDate: Date?
   let isViewed: Bool?
+  var attachment: UIImage?
   let allLists: [RocketLaunchList]
 
   init(launch: RocketLaunch) {
@@ -47,6 +48,10 @@ struct LaunchDetailView: View {
     self.launchNotes = launch.notes
     self.launchDate = launch.launchDate
     self.isViewed = launch.isViewed
+
+    if let attachment = launch.attachment {
+      self.attachment = UIImage(data: attachment)
+    }
     self.allLists = PersistenceController.getAllLists()
   }
 
@@ -58,6 +63,13 @@ struct LaunchDetailView: View {
       if let launchDate = launchDate {
         Section("Launch Date") {
           Text(launchDate.formatted())
+        }
+      }
+      if let attachment = attachment {
+        Section {
+          Image(uiImage: attachment)
+            .resizable()
+            .aspectRatio(contentMode: .fit)
         }
       }
       Section {

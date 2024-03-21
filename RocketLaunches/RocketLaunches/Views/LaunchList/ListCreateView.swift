@@ -71,7 +71,8 @@ struct ListCreateView: View {
             RocketLaunchList.create(withTitle: self.text, in: self.viewContext)
             dismiss()
           }
-        })
+        }
+      )
     }
   }
 }

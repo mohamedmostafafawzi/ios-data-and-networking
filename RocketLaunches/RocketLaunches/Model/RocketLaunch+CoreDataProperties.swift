@@ -32,6 +32,7 @@
 
 import CoreData
 import SwiftUI
+import UIKit
 
 extension RocketLaunch {
   static func createWith(
@@ -40,6 +41,7 @@ extension RocketLaunch {
     launchDate: Date,
     isViewed: Bool,
     launchpad: String,
+    attachment: UIImage?,
     tags: Set<Tag> = [],
     in list: RocketLaunchList,
     using managedObjectContext: NSManagedObjectContext
@@ -50,6 +52,7 @@ extension RocketLaunch {
     launch.launchDate = launchDate
     launch.isViewed = isViewed
     launch.launchpad = launchpad
+    launch.attachment = attachment?.jpegData(compressionQuality: 1) ?? Data()
     launch.tags = tags
     launch.addToList(list)
 
@@ -105,6 +108,7 @@ extension RocketLaunch {
   @NSManaged public var notes: String?
   @NSManaged public var list: Set<RocketLaunchList>
   @NSManaged var tags: Set<Tag>?
+  @NSManaged public var attachment: Data?
 }
 
 // MARK: Generated accessors for list
