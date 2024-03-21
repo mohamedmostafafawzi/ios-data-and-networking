@@ -20,7 +20,7 @@
 - [x] Saving Launches
 
 ## Core Data: Beyond the Basics
-- [ ] Fetching & Displaying Launches
+- [x] Fetching & Displaying Launches
 - [ ] Advanced Core Data
 
 ### Resources
